@@ -1,0 +1,13 @@
+城市的生命系统：离线版使用说明
+
+1. 把这个压缩包完整解压到任意文件夹。
+2. 双击 index.html，用 Chrome、Edge、Safari 或 Firefox 打开即可，不需要联网，也不需要安装任何东西。
+3. 操作：
+   电脑  拖动旋转，滚轮缩放，按住 Shift 拖动平移，方向键也能转动视角。
+   手机  单指拖动旋转，双指缩放和平移。
+4. 页面需要浏览器支持 WebGL。如果打开后提示“这个页面需要 WebGL”，请换一个新版浏览器，
+   或在浏览器设置里打开“硬件加速”。
+5. assets 文件夹要和 index.html 放在一起，不要单独移动 index.html。
+
+在线版：https://wanglu2016.github.io/chengshi-shengming-xitong/
+源代码：https://github.com/wanglu2016/chengshi-shengming-xitong

@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>城市的生命系统</title>
+<meta name="description" content="电力、通信、供水、医疗、物流、交通、零售、学校、支付与金融：九张网怎样让一座城市活着。可交互的三维城市，能拨动 24 小时，也能切断任何一张网看连锁反应。">
+<meta property="og:title" content="城市的生命系统">
+<meta property="og:description" content="九张网怎样让一座城市活着。可交互的三维城市。">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://wanglu2016.github.io/chengshi-shengming-xitong/assets/img/og.jpg">
+<meta name="theme-color" content="#050816">
+<link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/fonts.css">
+<link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body class="is-intro">
+
+<canvas id="scene" tabindex="0" aria-label="三维城市。拖动旋转，滚轮或双指缩放，按住 Shift 拖动可平移。"></canvas>
+<div id="labels" aria-hidden="true"></div>
+<div class="scrim" aria-hidden="true"></div>
+
+<header class="top">
+  <h1 class="brand">城市的生命系统</h1>
+  <nav class="modes" aria-label="视图">
+    <button type="button" data-mode="overview" aria-pressed="true">全景</button>
+    <button type="button" data-mode="layers" aria-pressed="false">分层</button>
+    <button type="button" data-mode="fault" aria-pressed="false">故障推演</button>
+  </nav>
+  <div class="tools">
+    <button type="button" id="btnGhost" aria-pressed="false" title="把楼房变透明，看清街道上的管线">透视</button>
+    <button type="button" id="btnSound" aria-pressed="false" title="城市的心跳声">声音</button>
+    <button type="button" id="btnTour">导览</button>
+  </div>
+</header>
+
+<section class="monitor" aria-label="九个系统的状态">
+  <div class="monitor-head"><h2>生命体征</h2><span id="valHead">当前负荷</span></div>
+  <ul id="rows"></ul>
+  <p class="hint" id="monHint">点一行，单独看这张网。</p>
+</section>
+
+<aside class="panel" id="detail" hidden aria-live="polite"></aside>
+
+<aside class="panel" id="fault" hidden>
+  <h2>故障推演</h2>
+  <p class="lead">切断一张网，看接下来 72 小时里，其余八张怎样一个推倒一个。</p>
+  <div class="cuts" id="cuts" role="group" aria-label="选择要切断的系统"></div>
+  <svg id="ring" viewBox="-112 -112 224 224" role="img" aria-label="九个系统之间的依赖关系"></svg>
+  <ol id="log" aria-live="polite"></ol>
+  <button type="button" class="btn" id="btnRestore" hidden>全部恢复</button>
+</aside>
+
+<footer class="timebar">
+  <button type="button" id="btnPlay" class="play" aria-label="暂停"><span></span></button>
+  <div class="clock"><b id="clock">19:30</b><span id="day"></span></div>
+  <input type="range" id="time" min="0" max="24" step="0.02" value="19.5" aria-label="时间">
+  <p id="phase"></p>
+</footer>
+
+<div class="tour" id="tour" hidden>
+  <span class="count" id="tourCount"></span>
+  <h3 id="tourTitle"></h3>
+  <p id="tourText"></p>
+  <div class="tour-nav">
+    <button type="button" class="btn ghost" id="tourPrev">上一步</button>
+    <button type="button" class="btn" id="tourNext">下一步</button>
+    <button type="button" class="btn ghost" id="tourExit">退出导览</button>
+  </div>
+</div>
+
+<div class="ride" id="ride" hidden>
+  <p id="rideCap"></p>
+  <div class="ride-bar"><i id="rideProg"></i></div>
+  <button type="button" class="btn ghost" id="rideEnd">结束跟随</button>
+</div>
+
+<div class="nodecard" id="nodecard" hidden></div>
+<div class="hovertip" id="hovertip" hidden></div>
+<div class="toast gone" id="toast" aria-hidden="true"></div>
+
+<div class="intro" id="intro">
+  <p class="intro-title" aria-hidden="true">城市的生命系统</p>
+  <div class="intro-body">
+    <p class="intro-lead">九张网，一座城。<br>电、水、信号、人、货和钱，每一秒都在流动。</p>
+    <p class="intro-sub">电力、通信、供水、医疗、物流、交通、零售、学校、支付与金融。你可以拨动一天的时间，揭开每一层，或者切断其中一张，看城市怎样一步步停下来。</p>
+    <div class="intro-go">
+      <button type="button" class="btn big" id="goTour">开始导览</button>
+      <button type="button" class="btn big ghost" id="goFree">自己逛逛</button>
+    </div>
+    <p class="intro-note">这是一座虚构的城市，数字和依赖强度都是示意。</p>
+  </div>
+</div>
+
+<div class="nogl" id="nogl" hidden>
+  <h2>这个页面需要 WebGL</h2>
+  <p>你的浏览器没能启动三维绘图。请换用新版的 Chrome、Edge、Safari 或 Firefox，并确认没有关闭硬件加速。</p>
+</div>
+<noscript><div class="nogl"><h2>这个页面需要 JavaScript</h2><p>请在浏览器里启用 JavaScript 后刷新。</p></div></noscript>
+
+<script src="assets/js/three.min.js"></script>
+<script src="assets/js/data.js"></script>
+<script src="assets/js/sim.js"></script>
+<script src="assets/js/world.js"></script>
+<script src="assets/js/app.js"></script>
+</body>
+</html>

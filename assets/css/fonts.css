@@ -1,0 +1,5 @@
+/* Noto Sans SC / Noto Serif SC，按本页实际用字裁剪。许可见 ../fonts/OFL.txt */
+@font-face { font-family: 'Noto Sans SC'; font-weight: 400; font-style: normal; font-display: swap; src: url('../fonts/NotoSansSC-Regular.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Sans SC'; font-weight: 500 700; font-style: normal; font-display: swap; src: url('../fonts/NotoSansSC-Medium.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Serif SC'; font-weight: 600 800; font-style: normal; font-display: swap; src: url('../fonts/NotoSerifSC-Bold.woff2') format('woff2'); }
+@font-face { font-family: 'Noto Serif SC'; font-weight: 900; font-style: normal; font-display: swap; src: url('../fonts/NotoSerifSC-Black.woff2') format('woff2'); unicode-range: U+57CE, U+5E02, U+7684, U+751F, U+547D, U+7CFB, U+7EDF; }
